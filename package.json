@@ -24,6 +24,7 @@
     ]
   },
   "private": true,
+  "type": "module",
   "packageManager": "npm@11.6.2",
   "dependencies": {
     "@angular/common": "^21.0.0",
