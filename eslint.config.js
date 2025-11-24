@@ -37,5 +37,11 @@ export default tseslint.config(
       angular.configs.templateAccessibility,
     ],
     rules: {},
+  },
+  {
+   files: ['**/*.ts', '**/*.js'],
+   rules: {
+     'consistent-return': 'off'
+   }
   }
 )
