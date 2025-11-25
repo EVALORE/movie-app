@@ -1,13 +1,2 @@
-<div class="container">
-  <div class="input-group">
-    <label for="api-key">Введите API ключ:</label>
-    <input
-      id="api-key"
-      type="password"
-      placeholder="Ваш API ключ"
-      [value]="apiKey()"
-      (input)="onApiKeyChange($event)"
-    />
-  </div>
-</div>
+<app-movie-list />
 <router-outlet />
