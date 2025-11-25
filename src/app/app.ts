@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { MovieList } from './features/movie-list/movie-list';
+import { Header } from './features/header/header';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, MovieList],
+  imports: [RouterOutlet, Header],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })

@@ -13,13 +13,6 @@ export class MovieList {
   public readonly moviesStore = inject(MovieStore);
   public readonly router = inject(Router);
 
-  protected readonly search = this.moviesStore.search;
-
-  protected searchMovies(event: Event): void {
-    const { value } = event.target as HTMLInputElement;
-    this.search.set(value);
-  }
-
   protected navigateToMovie(movieId: string): void {
     this.moviesStore.movieId.set(movieId);
     void this.router.navigate(['/movie']);
