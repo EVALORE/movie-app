@@ -15,6 +15,6 @@ export class MovieList {
 
   protected navigateToMovie(movieId: string): void {
     this.moviesStore.movieId.set(movieId);
-    this.route.navigateToMovie();
+    this.route.navigateToMovie(movieId);
   }
 }

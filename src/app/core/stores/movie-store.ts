@@ -1,7 +1,7 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { MovieApi } from '../api/movie-api';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { filter, map, switchMap, tap } from 'rxjs';
+import { catchError, filter, map, of, switchMap, tap } from 'rxjs';
 import { NotificationStore } from '../modal/notification-store.service';
 
 @Injectable({
@@ -34,6 +34,10 @@ export class MovieStore {
     toObservable(this.movieId).pipe(
       filter((movieId) => movieId !== ''),
       switchMap((movieId) => this.api.getMovie(movieId)),
+      catchError(() => {
+        this.notificationStore.show('Movie not found', 'error');
+        return of();
+      }),
     ),
   );
 }

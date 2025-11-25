@@ -11,7 +11,7 @@ export class Route {
     void this.router.navigate(['/movies']);
   }
 
-  public navigateToMovie(): void {
-    void this.router.navigate(['/movie']);
+  public navigateToMovie(movieId: string): void {
+    void this.router.navigate(['movie', movieId]);
   }
 }
