@@ -1,0 +1,11 @@
+<div class="flex justify-center mb-2 p-2 bg-blue-300">
+  <div>
+    <label class="mr-1" for="search" aria-label="Movie Search Input">Search</label>
+    <input class="border-b" id="search" type="text" placeholder="movie name" [value]="search()" (input)="searchMovies($event)" (keyup)="search()">
+  </div>
+</div>
+<div class="flex gap-2 flex-wrap justify-center">
+  @for (movie of moviesStore.movies(); track movie) {
+    <app-movie-card [movieInformation]="movie" (click)="navigateToMovie(movie.id)"/>
+  }
+</div>
