@@ -1,3 +1,3 @@
-@for (movie of moviesApi.movies(); track movie) {
+@for (movie of moviesApi.movies()?.results; track movie) {
   <app-movie-card [movieInformation]="movie"/>
 }
