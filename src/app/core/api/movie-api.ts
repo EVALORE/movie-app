@@ -10,22 +10,23 @@ import { Observable } from 'rxjs';
 export class MovieApi {
   private readonly http = inject(HttpClient);
 
-  public getPopularMovies(): Observable<MoviesResponse> {
+  public getPopularMovies(page: number): Observable<MoviesResponse> {
     return this.http.get<MoviesResponse>(`${environment.baseUrl}/movie/popular`, {
       headers: {
         accept: 'application/json',
         Authorization: `Bearer ${environment.apiKey}`,
       },
+      params: { page: String(page) },
     });
   }
 
-  public getSearchMovies(query: string): Observable<MoviesResponse> {
+  public getSearchMovies(query: string, page: number): Observable<MoviesResponse> {
     return this.http.get<MoviesResponse>(`${environment.baseUrl}/search/movie`, {
       headers: {
         accept: 'application/json',
         Authorization: `Bearer ${environment.apiKey}`,
       },
-      params: { query },
+      params: { query, page: String(page) },
     });
   }
 

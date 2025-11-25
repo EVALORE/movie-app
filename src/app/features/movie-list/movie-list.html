@@ -3,3 +3,8 @@
     <app-movie-card [movieInformation]="movie" (click)="navigateToMovie(movie.id)" />
   }
 </div>
+@if (moviesStore.isLoading()) {
+  <div>
+    <p>Loading more movies...</p>
+  </div>
+}
