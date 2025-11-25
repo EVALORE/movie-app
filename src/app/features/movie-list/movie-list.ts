@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { MovieStore } from '../../core/stores/movie-store';
 import { MovieCard } from './movie-card/movie-card';
-import { Router } from '@angular/router';
+import { Route } from '../../core/route/route';
 
 @Component({
   selector: 'app-movie-list',
@@ -11,10 +11,10 @@ import { Router } from '@angular/router';
 })
 export class MovieList {
   public readonly moviesStore = inject(MovieStore);
-  public readonly router = inject(Router);
+  public readonly route = inject(Route);
 
   protected navigateToMovie(movieId: string): void {
     this.moviesStore.movieId.set(movieId);
-    void this.router.navigate(['/movie']);
+    this.route.navigateToMovie();
   }
 }

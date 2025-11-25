@@ -1,5 +1,5 @@
 <div class="flex gap-2 flex-wrap justify-center">
   @for (movie of moviesStore.movies(); track movie) {
-    <app-movie-card [movieInformation]="movie" (click)="navigateToMovie(movie.id)"/>
+    <app-movie-card [movieInformation]="movie" (click)="navigateToMovie(movie.id)" />
   }
 </div>
