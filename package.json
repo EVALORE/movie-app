@@ -11,18 +11,6 @@
     "prepare": "husky",
     "commitlint": "commitlint --edit"
   },
-  "prettier": {
-    "printWidth": 100,
-    "singleQuote": true,
-    "overrides": [
-      {
-        "files": "*.html",
-        "options": {
-          "parser": "angular"
-        }
-      }
-    ]
-  },
   "private": true,
   "type": "module",
   "packageManager": "npm@11.6.2",
