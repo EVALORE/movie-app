@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { MovieStore } from './movie-store';
+import { MovieStore } from '../../core/stores/movie-store';
 import { MovieCard } from './movie-card/movie-card';
 import { Router } from '@angular/router';
 
@@ -8,7 +8,6 @@ import { Router } from '@angular/router';
   imports: [MovieCard],
   templateUrl: './movie-list.html',
   styleUrl: './movie-list.css',
-  providers: [MovieStore],
 })
 export class MovieList {
   public readonly moviesStore = inject(MovieStore);
@@ -21,7 +20,8 @@ export class MovieList {
     this.search.set(value);
   }
 
-  protected navigateToMovie(): void {
+  protected navigateToMovie(movieId: string): void {
+    this.moviesStore.movieId.set(movieId);
     void this.router.navigate(['/movie']);
   }
 }
