@@ -18,7 +18,9 @@ export class MovieDetails {
 
   protected readonly title = computed(() => this.movie()?.title ?? '');
   protected readonly overview = computed(() => this.movie()?.overview ?? '');
-  protected readonly releaseDate = computed(() => this.movie()?.release_date ?? '');
+  protected readonly releaseDate = computed(
+    () => this.movie()?.release_date.replace(/-/gu, '.') ?? '',
+  );
   protected readonly genres = computed(() => this.movie()?.genres ?? []);
   protected readonly voteAverage = computed(() => this.movie()?.vote_average ?? 0);
 }
