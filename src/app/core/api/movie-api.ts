@@ -1,24 +1,13 @@
 import { computed, Injectable, signal } from '@angular/core';
 import { httpResource } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-
-interface AuthResponse {
-  success: boolean;
-}
-
-interface MoviesResponse {
-  results: unknown[];
-}
+import { MoviesResponse } from './responses';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MovieApi {
   public readonly apiKey = signal<string>('');
-
-  private readonly auth = httpResource<AuthResponse>(() =>
-    this.createRequest(`${environment.baseUrl}/authentication`),
-  );
 
   private readonly moviesResource = httpResource<MoviesResponse>(() =>
     this.createRequest(`${environment.baseUrl}/movie/popular`),
