@@ -1,0 +1,14 @@
+<div class="fixed top-5 right-5 z-50 flex flex-col gap-2.5">
+  @for (notification of notificationStore.notifications(); track notification.id) {
+    <div
+      class="flex text-white px-3 py-5 rounded-s cursor-pointer min-w-3xs shadow-md justify-between items-center"
+      tabindex="0"
+      [class]="notification.type"
+      (keyup)="removeNotification(notification.id)"
+      (click)="removeNotification(notification.id)"
+    >
+      <span>{{ notification.message }}</span>
+      <span>&times;</span>
+    </div>
+  }
+</div>
