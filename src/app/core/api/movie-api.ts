@@ -1,7 +1,7 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { MoviesResponse } from './responses';
+import { Movie, MoviesResponse } from './responses';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -9,7 +9,6 @@ import { Observable } from 'rxjs';
 })
 export class MovieApi {
   private readonly http = inject(HttpClient);
-  public readonly apiKey = signal('');
 
   public getPopularMovies(): Observable<MoviesResponse> {
     return this.http.get<MoviesResponse>(`${environment.baseUrl}/movie/popular`, {
@@ -27,6 +26,15 @@ export class MovieApi {
         Authorization: `Bearer ${environment.apiKey}`,
       },
       params: { query },
+    });
+  }
+
+  public getMovie(movieId: string): Observable<Movie> {
+    return this.http.get<Movie>(`${environment.baseUrl}/movie/${movieId}`, {
+      headers: {
+        accept: 'application/json',
+        Authorization: `Bearer ${environment.apiKey}`,
+      },
     });
   }
 }
