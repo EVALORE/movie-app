@@ -1,7 +1,8 @@
 import { Component, inject } from '@angular/core';
-import { MovieStore } from '../../core/stores/movie-store';
 import { MovieCard } from './movie-card/movie-card';
 import { Route } from '../../core/route/route';
+import { MoviesStore } from '../../core/stores/movies-store.service';
+import { MovieStore } from '../../core/stores/movie-store';
 
 @Component({
   selector: 'app-movie-list',
@@ -11,7 +12,8 @@ import { Route } from '../../core/route/route';
   host: { '(window:scroll)': 'onScroll()' },
 })
 export class MovieList {
-  public readonly moviesStore = inject(MovieStore);
+  public readonly moviesStore = inject(MoviesStore);
+  public readonly movieStore = inject(MovieStore);
   public readonly route = inject(Route);
 
   public onScroll(): void {
@@ -25,7 +27,7 @@ export class MovieList {
   }
 
   protected navigateToMovie(movieId: string): void {
-    this.moviesStore.movieId.set(movieId);
+    this.movieStore.movieId.set(movieId);
     this.route.navigateToMovie(movieId);
   }
 }
