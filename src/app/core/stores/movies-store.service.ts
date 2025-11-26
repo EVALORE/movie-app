@@ -30,7 +30,7 @@ export class MoviesStore {
 
           if (page === 1) {
             this.movies.set(response.results);
-            this.showResultNotification(response.results.length);
+            this.showResultNotification(response.total_results);
           } else {
             this.movies.update((current) => [...current, ...response.results]);
           }
@@ -59,7 +59,7 @@ export class MoviesStore {
     if (count === 0) {
       this.notificationStore.show('No movies found', 'error');
     } else {
-      this.notificationStore.show(`Found ${String(count)}`, 'success');
+      this.notificationStore.show(`Found ${String(count)} Movies`, 'success');
     }
   }
 }
