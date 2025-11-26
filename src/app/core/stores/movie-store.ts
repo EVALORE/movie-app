@@ -2,7 +2,7 @@ import { computed, inject, Injectable, signal } from '@angular/core';
 import { MovieApi } from '../api/movie-api';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { catchError, of } from 'rxjs';
-import { NotificationStore } from '../modal/notification-store.service';
+import { NotificationStore } from '../modal/notification-store';
 
 @Injectable({
   providedIn: 'root',
