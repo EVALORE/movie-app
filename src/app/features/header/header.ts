@@ -1,10 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { MovieStore } from '../../core/stores/movie-store';
 import { Route } from '../../core/route/route';
+import { ThemeToggle } from '../theme-toggle/theme-toggle';
 
 @Component({
   selector: 'app-header',
-  imports: [],
+  imports: [ThemeToggle],
   templateUrl: './header.html',
   styleUrl: './header.css',
 })
