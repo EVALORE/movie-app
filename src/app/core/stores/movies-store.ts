@@ -2,8 +2,8 @@ import { computed, inject, Injectable, linkedSignal, signal } from '@angular/cor
 import { MovieApi } from '../api/movie-api';
 import { NotificationStore } from '../modal/notification-store';
 import { Movie } from '../api/responses';
-import { rxResource } from '@angular/core/rxjs-interop';
-import { catchError, of } from 'rxjs';
+import { rxResource, toObservable } from '@angular/core/rxjs-interop';
+import { catchError, debounceTime, distinctUntilChanged, of, switchMap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -16,14 +16,25 @@ export class MoviesStore {
   public readonly currentPage = signal(1);
   public readonly totalPages = computed(() => this.moviesResource.value()?.total_pages ?? 1);
 
+  private readonly debouncedSearch = toObservable(this.search).pipe(
+    debounceTime(500),
+    distinctUntilChanged(),
+  );
+
   private readonly moviesResource = rxResource({
     params: () => ({ search: this.search(), page: this.currentPage() }),
     stream: ({ params: { search, page } }) => {
-      const request = search
-        ? this.api.getSearchMovies(search, page)
-        : this.api.getPopularMovies(page);
+      if (!search) {
+        return this.api.getPopularMovies(page).pipe(
+          catchError(() => {
+            this.notificationStore.show('Failed to load movies', 'error');
+            return of();
+          }),
+        );
+      }
 
-      return request.pipe(
+      return this.debouncedSearch.pipe(
+        switchMap(() => this.api.getSearchMovies(search, page)),
         catchError(() => {
           this.notificationStore.show('Failed to load movies', 'error');
           return of();
