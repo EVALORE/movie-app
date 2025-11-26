@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
-import { NotificationStore } from '../../../core/modal/notification-store.service';
+import { NotificationStore } from '../../../core/modal/notification-store';
 
 @Component({
   selector: 'app-notification-container',
   imports: [],
-  templateUrl: './notification-container.component.html',
-  styleUrl: './notification-container.component.css',
+  templateUrl: './notification-container.html',
+  styleUrl: './notification-container.css',
 })
 export class NotificationContainer {
   public readonly notificationStore = inject(NotificationStore);

@@ -2,9 +2,5 @@
   (click)="theme.toggleDarkMode()"
   class="p-2 rounded-lg dark:bg-gray-700 bg-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
 >
-  @if (theme.isDarkMode()) {
-    <span>☀️ Светлая</span>
-  } @else {
-    <span>🌙 Тёмная</span>
-  }
+  <span>{{ theme.isDarkMode() ? '☀️' : '🌙' }}</span>
 </button>

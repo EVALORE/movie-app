@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
-import { MovieStore } from '../../core/stores/movie-store';
 import { Route } from '../../core/route/route';
 import { ThemeToggle } from '../theme-toggle/theme-toggle';
+import { MoviesStore } from '../../core/stores/movies-store';
 
 @Component({
   selector: 'app-header',
@@ -11,12 +11,12 @@ import { ThemeToggle } from '../theme-toggle/theme-toggle';
 })
 export class Header {
   private readonly route = inject(Route);
-  public readonly moviesStore = inject(MovieStore);
+  public readonly moviesStore = inject(MoviesStore);
   protected readonly search = this.moviesStore.search;
 
   protected searchMovies(event: Event): void {
     const { value } = event.target as HTMLInputElement;
-    this.search.set(value);
+    this.moviesStore.setSearch(value);
   }
 
   protected navigateToMovies(): void {

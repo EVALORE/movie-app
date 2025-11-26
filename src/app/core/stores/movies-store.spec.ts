@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { NotificationStore } from './notification-store';
+import { MoviesStore } from './movies-store';
 
-describe('Notification', () => {
-  let service: NotificationStore;
+describe('Movies', () => {
+  let service: MoviesStore;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(NotificationStore);
+    service = TestBed.inject(MoviesStore);
   });
 
   it('should be created', () => {
