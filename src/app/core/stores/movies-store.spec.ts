@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { MoviesStore } from './movies-store.service';
+import { MoviesStore } from './movies-store';
 
 describe('Movies', () => {
   let service: MoviesStore;

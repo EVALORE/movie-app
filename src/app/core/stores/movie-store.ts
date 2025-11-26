@@ -15,12 +15,17 @@ export class MovieStore {
   public readonly movie = computed(() => this.movieResource.value());
   public readonly movieResource = rxResource({
     params: () => ({ movieId: this.movieId() }),
-    stream: ({ params: { movieId } }) =>
-      this.api.getMovie(movieId).pipe(
+    stream: ({ params: { movieId } }) => {
+      if (!movieId) {
+        return of();
+      }
+
+      return this.api.getMovie(movieId).pipe(
         catchError(() => {
           this.notificationStore.show('Movie not found', 'error');
           return of();
         }),
-      ),
+      );
+    },
   });
 }

@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { MovieCard } from './movie-card/movie-card';
 import { Route } from '../../core/route/route';
-import { MoviesStore } from '../../core/stores/movies-store.service';
+import { MoviesStore } from '../../core/stores/movies-store';
 import { MovieStore } from '../../core/stores/movie-store';
 
 @Component({

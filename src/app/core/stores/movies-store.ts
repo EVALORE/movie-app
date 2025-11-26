@@ -2,8 +2,8 @@ import { computed, inject, Injectable, linkedSignal, signal } from '@angular/cor
 import { MovieApi } from '../api/movie-api';
 import { NotificationStore } from '../modal/notification-store.service';
 import { Movie } from '../api/responses';
-import { tap } from 'rxjs';
 import { rxResource } from '@angular/core/rxjs-interop';
+import { catchError, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -24,8 +24,9 @@ export class MoviesStore {
         : this.api.getPopularMovies(page);
 
       return request.pipe(
-        tap((response) => {
-          this.notificationStore.show(`Loaded ${String(response.results.length)}`, 'success');
+        catchError(() => {
+          this.notificationStore.show('Failed to load movies', 'error');
+          return of();
         }),
       );
     },

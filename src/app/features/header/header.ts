@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { Route } from '../../core/route/route';
 import { ThemeToggle } from '../theme-toggle/theme-toggle';
-import { MoviesStore } from '../../core/stores/movies-store.service';
+import { MoviesStore } from '../../core/stores/movies-store';
 
 @Component({
   selector: 'app-header',
