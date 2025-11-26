@@ -1,4 +1,4 @@
-import { computed, inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, linkedSignal, signal } from '@angular/core';
 import { MovieApi } from '../api/movie-api';
 import { NotificationStore } from '../modal/notification-store.service';
 import { Movie } from '../api/responses';
@@ -16,7 +16,6 @@ export class MoviesStore {
   public readonly currentPage = signal(1);
   public readonly totalPages = computed(() => this.moviesResource.value()?.total_pages ?? 1);
 
-  public readonly movies = signal<Movie[]>([]);
   private readonly moviesResource = rxResource({
     params: () => ({ search: this.search(), page: this.currentPage() }),
     stream: ({ params: { search, page } }) => {
@@ -27,9 +26,20 @@ export class MoviesStore {
       return request.pipe(
         tap((response) => {
           this.notificationStore.show(`Loaded ${String(response.results.length)}`, 'success');
-          this.movies.update((current) => [...current, ...response.results]);
         }),
       );
+    },
+  });
+
+  public readonly movies = linkedSignal<{ results: Movie[] | undefined; search: string }, Movie[]>({
+    source: () => ({
+      results: this.moviesResource.value()?.results,
+      search: this.search(),
+    }),
+    computation: ({ results, search }, previous) => {
+      const isNewSearch = previous?.source.search !== search;
+      const previousMovies = isNewSearch ? [] : previous.value;
+      return [...previousMovies, ...(results ?? [])];
     },
   });
 

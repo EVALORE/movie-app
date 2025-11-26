@@ -1,7 +1,7 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { MovieApi } from '../api/movie-api';
-import { toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { catchError, filter, of, switchMap } from 'rxjs';
+import { rxResource } from '@angular/core/rxjs-interop';
+import { catchError, of } from 'rxjs';
 import { NotificationStore } from '../modal/notification-store.service';
 
 @Injectable({
@@ -12,14 +12,15 @@ export class MovieStore {
   private readonly notificationStore = inject(NotificationStore);
 
   public readonly movieId = signal('');
-  public readonly movie = toSignal(
-    toObservable(this.movieId).pipe(
-      filter((movieId) => movieId !== ''),
-      switchMap((movieId) => this.api.getMovie(movieId)),
-      catchError(() => {
-        this.notificationStore.show('Movie not found', 'error');
-        return of();
-      }),
-    ),
-  );
+  public readonly movie = computed(() => this.movieResource.value());
+  public readonly movieResource = rxResource({
+    params: () => ({ movieId: this.movieId() }),
+    stream: ({ params: { movieId } }) =>
+      this.api.getMovie(movieId).pipe(
+        catchError(() => {
+          this.notificationStore.show('Movie not found', 'error');
+          return of();
+        }),
+      ),
+  });
 }
