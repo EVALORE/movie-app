@@ -1,10 +1,13 @@
 <div class="flex gap-2 flex-wrap justify-center">
+  @if (moviesStore.isLoading() || moviesStore.movies().length === 0) {
+    <app-movie-card-skeleton />
+    <app-movie-card-skeleton />
+    <app-movie-card-skeleton />
+    <app-movie-card-skeleton />
+    <app-movie-card-skeleton />
+    <app-movie-card-skeleton />
+  }
   @for (movie of moviesStore.movies(); track movie) {
     <app-movie-card [movieInformation]="movie" (click)="navigateToMovie(movie.id)" />
   }
 </div>
-@if (moviesStore.isLoading()) {
-  <div>
-    <p>Loading more movies...</p>
-  </div>
-}

@@ -5,10 +5,11 @@ import { MoviesStore } from '../../core/stores/movies-store';
 import { MovieStore } from '../../core/stores/movie-store';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { debounceTime, Subject } from 'rxjs';
+import { MovieCardSkeleton } from './movie-card/movie-card-skeleton/movie-card-skeleton';
 
 @Component({
   selector: 'app-movie-list',
-  imports: [MovieCard],
+  imports: [MovieCard, MovieCardSkeleton],
   templateUrl: './movie-list.html',
   styleUrl: './movie-list.css',
   host: { '(window:scroll)': 'onScroll()' },
