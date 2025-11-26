@@ -14,7 +14,7 @@ export class MoviesStore {
 
   public readonly search = signal('');
   public readonly currentPage = signal(1);
-  public readonly totalPages = signal(0);
+  public readonly totalPages = computed(() => this.moviesResource.value()?.total_pages ?? 1);
 
   public readonly movies = signal<Movie[]>([]);
   private readonly moviesResource = rxResource({
@@ -26,14 +26,8 @@ export class MoviesStore {
 
       return request.pipe(
         tap((response) => {
-          this.totalPages.set(response.total_pages);
-
-          if (page === 1) {
-            this.movies.set(response.results);
-            this.showResultNotification(response.total_results);
-          } else {
-            this.movies.update((current) => [...current, ...response.results]);
-          }
+          this.notificationStore.show(`Loaded ${String(response.results.length)}`, 'success');
+          this.movies.update((current) => [...current, ...response.results]);
         }),
       );
     },
@@ -53,13 +47,5 @@ export class MoviesStore {
   public setSearch(value: string): void {
     this.currentPage.set(1);
     this.search.set(value);
-  }
-
-  private showResultNotification(count: number): void {
-    if (count === 0) {
-      this.notificationStore.show('No movies found', 'error');
-    } else {
-      this.notificationStore.show(`Found ${String(count)} Movies`, 'success');
-    }
   }
 }
