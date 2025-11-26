@@ -1,0 +1,23 @@
+<div
+  tabindex=""
+  (keyup)="navigateToMovies()"
+  (click)="navigateToMovies()"
+  class="text-4xl font-bold cursor-pointer"
+>
+  Movie DB
+</div>
+<div>
+  <label class="mr-1" for="search" aria-label="Movie Search Input">Search</label>
+  <input
+    class="border-b"
+    id="search"
+    type="text"
+    placeholder="movies"
+    [value]="search()"
+    (input)="searchMovies($event)"
+    (keyup)="search()"
+  />
+</div>
+<div>
+  <app-theme-toggle />
+</div>

@@ -1,27 +1,31 @@
 import { Component, inject } from '@angular/core';
-import { MovieStore } from './movie-store';
+import { MovieStore } from '../../core/stores/movie-store';
 import { MovieCard } from './movie-card/movie-card';
-import { Router } from '@angular/router';
+import { Route } from '../../core/route/route';
 
 @Component({
   selector: 'app-movie-list',
   imports: [MovieCard],
   templateUrl: './movie-list.html',
   styleUrl: './movie-list.css',
-  providers: [MovieStore],
+  host: { '(window:scroll)': 'onScroll()' },
 })
 export class MovieList {
   public readonly moviesStore = inject(MovieStore);
-  public readonly router = inject(Router);
+  public readonly route = inject(Route);
 
-  protected readonly search = this.moviesStore.search;
+  public onScroll(): void {
+    const scrollPosition = window.innerHeight + window.scrollY;
+    const documentHeight = document.documentElement.scrollHeight;
+    const threshold = 200;
 
-  protected searchMovies(event: Event): void {
-    const { value } = event.target as HTMLInputElement;
-    this.search.set(value);
+    if (scrollPosition >= documentHeight - threshold && !this.moviesStore.isLoading()) {
+      this.moviesStore.loadMoreMovies();
+    }
   }
 
-  protected navigateToMovie(): void {
-    void this.router.navigate(['/movie']);
+  protected navigateToMovie(movieId: string): void {
+    this.moviesStore.movieId.set(movieId);
+    this.route.navigateToMovie(movieId);
   }
 }

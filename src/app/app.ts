@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { MovieList } from './features/movie-list/movie-list';
+import { Header } from './features/header/header';
+import { NotificationContainer } from './shared/components/notification/notification-container.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, MovieList],
+  imports: [RouterOutlet, Header, NotificationContainer],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
