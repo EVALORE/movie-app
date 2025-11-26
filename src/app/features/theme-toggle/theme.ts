@@ -2,27 +2,37 @@ import { Injectable, signal } from '@angular/core';
 
 @Injectable()
 export class Theme {
-  public isDarkMode = signal<boolean>(false);
+  private readonly THEME_KEY = 'theme';
+  private readonly DARK_THEME = 'dark';
+  private readonly LIGHT_THEME = 'light';
+  private readonly THEME_ATTRIBUTE = 'data-theme';
+
+  public isDarkMode = signal<boolean>(this.getInitialTheme());
 
   constructor() {
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-      this.isDarkMode.set(true);
-      document.documentElement.setAttribute('data-theme', 'dark');
-    } else {
-      this.isDarkMode.set(false);
-      document.documentElement.removeAttribute('data-theme');
-    }
+    this.applyTheme(this.isDarkMode());
   }
 
   public toggleDarkMode(): void {
     this.isDarkMode.update((value) => !value);
-    if (this.isDarkMode()) {
-      document.documentElement.setAttribute('data-theme', 'dark');
-      localStorage.setItem('theme', 'dark');
+    this.applyTheme(this.isDarkMode());
+  }
+
+  private applyTheme(isDark: boolean): void {
+    if (isDark) {
+      document.documentElement.setAttribute(this.THEME_ATTRIBUTE, this.DARK_THEME);
+      localStorage.setItem(this.THEME_KEY, this.DARK_THEME);
     } else {
-      document.documentElement.removeAttribute('data-theme');
-      localStorage.setItem('theme', 'light');
+      document.documentElement.removeAttribute(this.THEME_ATTRIBUTE);
+      localStorage.setItem(this.THEME_KEY, this.LIGHT_THEME);
     }
+  }
+
+  private getInitialTheme(): boolean {
+    const savedTheme = localStorage.getItem(this.THEME_KEY);
+    if (savedTheme) {
+      return savedTheme === this.DARK_THEME;
+    }
+    return window.matchMedia('(prefers-color-scheme: dark)').matches;
   }
 }
