@@ -1,13 +1,12 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input, OnInit } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
 import { MovieStore } from './movie-store';
-import { MovieDetailsSkeleton } from './movie-details-skeleton/movie-details-skeleton';
+import { MovieDetailsSkeleton } from './movie-details-skeleton';
 
 @Component({
   selector: 'app-movie-details',
   imports: [NgOptimizedImage, MovieDetailsSkeleton],
   templateUrl: './movie-details.html',
-  styleUrl: './movie-details.css',
   providers: [MovieStore],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
