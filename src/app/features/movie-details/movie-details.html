@@ -1,13 +1,13 @@
 <article class="flex flex-col sm:flex-row gap-3.5">
-  @if (movie()) {
+  @if (movie().title) {
     <div class="relative w-80 aspect-2/3 flex-shrink-0">
-      <img [ngSrc]="posterPath()" alt="Poster for {{ title() }}" fill />
+      <img [ngSrc]="posterPath()" alt="Poster for {{ movie().title }}" fill />
     </div>
     <div>
-      <h1 class="text-4xl font-bold dark:text-slate-200">{{ title() }}</h1>
+      <h1 class="text-4xl font-bold dark:text-slate-200">{{ movie().title }}</h1>
       <div class="mt-2">
         <ul class="flex gap-2">
-          @for (genre of genres(); track $index) {
+          @for (genre of movie().genres; track $index) {
             <li class="bg-gray-700 px-2 py-1 rounded-xl text-white">{{ genre.name }}</li>
           }
         </ul>
@@ -15,11 +15,11 @@
           <h2 class="text-2xl">About movie</h2>
           <dl>
             <dt>Release</dt>
-            <dd class="text-xl">{{ releaseDate() }}</dd>
+            <dd class="text-xl">{{ movie().release_date }}</dd>
             <dt>Rated</dt>
-            <dd class="text-xl">{{ voteAverage() }}</dd>
+            <dd class="text-xl">{{ movie().vote_average }}</dd>
             <dt>Overview</dt>
-            <dd>{{ overview() }}</dd>
+            <dd>{{ movie().overview }}</dd>
           </dl>
         </div>
       </div>

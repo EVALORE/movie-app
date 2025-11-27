@@ -1,25 +1,23 @@
-import { Component, DestroyRef, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
 import { MovieCard } from './movie-card/movie-card';
-import { Route } from '../../core/route/route';
-import { MoviesStore } from '../../core/stores/movies-store';
-import { MovieStore } from '../../core/stores/movie-store';
+import { MoviesStore } from './movies-store';
 import { debounceTime, distinctUntilChanged, filter, map, Subject } from 'rxjs';
-import { MovieCardSkeleton } from './movie-card/movie-card-skeleton/movie-card-skeleton';
+import { MovieCardSkeleton } from './movie-card/movie-card-skeleton';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-movie-list',
   imports: [MovieCard, MovieCardSkeleton],
   templateUrl: './movie-list.html',
-  styleUrl: './movie-list.css',
+  providers: [MoviesStore],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { '(window:scroll)': 'onScroll()' },
 })
 export class MovieList {
   public readonly moviesStore = inject(MoviesStore);
-  public readonly movieStore = inject(MovieStore);
-  public readonly route = inject(Route);
+  public readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
-
   private readonly scrollSubject = new Subject<void>();
 
   constructor() {
@@ -27,7 +25,7 @@ export class MovieList {
       .pipe(
         map(() => this.isNearBottom()),
         distinctUntilChanged(),
-        debounceTime(1000),
+        debounceTime(500),
         filter((isNearBottom) => isNearBottom && !this.moviesStore.isLoading()),
         takeUntilDestroyed(this.destroyRef),
       )
@@ -48,7 +46,6 @@ export class MovieList {
   }
 
   protected navigateToMovie(movieId: string): void {
-    this.movieStore.movieId.set(movieId);
-    this.route.navigateToMovie(movieId);
+    void this.router.navigate(['movie', movieId]);
   }
 }

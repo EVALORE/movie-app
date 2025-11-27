@@ -1,8 +1,0 @@
-:host {
-  display: flex;
-  border: 1px solid var(--color-gray-700);
-  box-shadow: var(--shadow-md);
-  border-radius: var(--radius-lg);
-  width: max-content;
-  overflow: hidden;
-}

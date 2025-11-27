@@ -1,4 +1,4 @@
-import { Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { Movie } from '../../../core/api/responses';
 
 @Component({
@@ -9,6 +9,7 @@ import { Movie } from '../../../core/api/responses';
     class:
       'flex border border-slate-700 dark:border-slate-300 shadow-md rounded-lg w-max overflow-hidden',
   },
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MovieCard {
   public readonly movieInformation = input.required<Movie>();

@@ -1,12 +1,13 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Header } from './features/header/header';
-import { NotificationContainer } from './shared/components/notification/notification-container';
+import { Header } from './core/header/header';
+import { Notifications } from './shared/notifications/notifications';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Header, NotificationContainer],
+  imports: [RouterOutlet, Header, Notifications],
   templateUrl: './app.html',
-  styleUrl: './app.css',
+  host: { class: 'flex min-h-screen flex-col' },
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class App {}
