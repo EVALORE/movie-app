@@ -1,25 +1,28 @@
 import { Component, inject } from '@angular/core';
-import { RouteService } from '../services/route-service';
 import { ThemeToggle } from './theme-toggle/theme-toggle';
 import { MoviesStore } from '../stores/movies-store';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
+import { debounceTime, filter } from 'rxjs';
 
 @Component({
   selector: 'app-header',
-  imports: [ThemeToggle],
+  imports: [ThemeToggle, FormsModule, RouterLink, ReactiveFormsModule],
   templateUrl: './header.html',
   styleUrl: './header.css',
 })
 export class Header {
-  private readonly route = inject(RouteService);
   public readonly moviesStore = inject(MoviesStore);
-  protected readonly search = this.moviesStore.search;
+  public readonly input = new FormControl('', { nonNullable: true });
 
-  protected searchMovies(event: Event): void {
-    const { value } = event.target as HTMLInputElement;
-    this.moviesStore.setSearch(value);
-  }
-
-  protected navigateToMovies(): void {
-    this.route.navigateToMovies();
+  constructor() {
+    this.input.valueChanges
+      .pipe(
+        debounceTime(500),
+        filter((value) => value.trim().length !== 0),
+      )
+      .subscribe((value) => {
+        this.moviesStore.setSearch(value);
+      });
   }
 }
