@@ -10,7 +10,7 @@ import { SearchParams } from '../services/search-params.service';
   selector: 'app-header',
   imports: [ThemeToggle, FormsModule, RouterLink, ReactiveFormsModule],
   templateUrl: './header.html',
-  styleUrl: './header.css',
+  host: { class: 'mx-auto flex h-16 max-w-7xl items-center gap-8' },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Header {
