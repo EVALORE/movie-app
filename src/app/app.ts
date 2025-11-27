@@ -7,7 +7,7 @@ import { Notifications } from './shared/notifications/notifications';
   selector: 'app-root',
   imports: [RouterOutlet, Header, Notifications],
   templateUrl: './app.html',
-  styleUrl: './app.css',
+  host: { class: 'flex min-h-screen flex-col' },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class App {}
