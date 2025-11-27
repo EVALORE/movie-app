@@ -1,36 +1,29 @@
-import { Injectable, signal } from '@angular/core';
-
-type NotificationType = 'success' | 'error' | 'info';
-
-interface Notification {
-  id: number;
-  message: string;
-  type: NotificationType;
-  duration?: number;
-}
+import { computed, Injectable, signal } from '@angular/core';
+import { Notification } from './notification-card/notification-card';
 
 @Injectable({
   providedIn: 'root',
 })
 export class NotificationsService {
-  public readonly notifications = signal<Notification[]>([]);
+  private readonly notificationsMap = signal<Map<symbol, Notification>>(new Map());
+  public readonly notifications = computed(() => Array.from(this.notificationsMap().values()));
 
-  public show(message: string, type: NotificationType = 'info', duration = 3000): void {
-    const id = Date.now() + Math.random();
-    const newNotification: Notification = { id, message, type, duration };
-
-    this.notifications.update((notifications) => [...notifications, newNotification]);
-
-    if (duration > 0) {
-      setTimeout(() => {
-        this.remove(id);
-      }, duration);
-    }
+  public show(notification: Omit<Notification, 'id' | 'remove'>): void {
+    this.notificationsMap.update((notifications) => {
+      const id = Symbol('notificationId');
+      notifications.set(id, {
+        ...notification,
+        id,
+        remove: this.remove.bind(this, id),
+      });
+      return notifications;
+    });
   }
 
-  public remove(id: number): void {
-    this.notifications.update((notifications) =>
-      notifications.filter((notification) => notification.id !== id),
-    );
+  public remove(id: symbol): void {
+    this.notificationsMap.update((notifications) => {
+      notifications.delete(id);
+      return new Map(notifications);
+    });
   }
 }

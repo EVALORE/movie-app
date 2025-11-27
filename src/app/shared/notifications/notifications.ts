@@ -1,16 +1,19 @@
 import { Component, inject } from '@angular/core';
 import { NotificationsService } from './notifications-service';
+import { NotificationCard } from './notification-card/notification-card';
 
 @Component({
   selector: 'app-notifications',
-  imports: [],
-  templateUrl: './notifications.html',
-  styleUrl: './notifications.css',
+  imports: [NotificationCard],
+  template: `
+    @for (notification of notificationStore.notifications(); track notification.id) {
+      <app-notification-card [notification]="notification" />
+    }
+  `,
+  host: {
+    class: 'fixed top-5 right-5 z-50 flex flex-col gap-2.5',
+  },
 })
 export class Notifications {
   public readonly notificationStore = inject(NotificationsService);
-
-  public removeNotification(id: number): void {
-    this.notificationStore.remove(id);
-  }
 }
