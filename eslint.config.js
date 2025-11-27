@@ -6,42 +6,38 @@ export default tseslint.config(
   configs.js,
   configs.ts,
   {
-    files: ["**/*.ts"],
-    extends: [
-      angular.configs.tsRecommended,
-    ],
+    files: ['**/*.ts'],
+    extends: [angular.configs.tsRecommended],
     processor: angular.processInlineTemplates,
     rules: {
-      "@angular-eslint/directive-selector": [
-        "error",
+      '@angular-eslint/directive-selector': [
+        'error',
         {
-          type: "attribute",
-          prefix: "app",
-          style: "camelCase",
+          type: 'attribute',
+          prefix: 'app',
+          style: 'camelCase',
         },
       ],
-      "@angular-eslint/component-selector": [
-        "error",
+      '@angular-eslint/component-selector': [
+        'error',
         {
-          type: "element",
-          prefix: "app",
-          style: "kebab-case",
+          type: 'element',
+          prefix: 'app',
+          style: 'kebab-case',
         },
       ],
     },
   },
   {
-    files: ["**/*.html"],
-    extends: [
-      angular.configs.templateRecommended,
-      angular.configs.templateAccessibility,
-    ],
+    files: ['**/*.html'],
+    extends: [angular.configs.templateRecommended, angular.configs.templateAccessibility],
     rules: {},
   },
   {
-   files: ['**/*.ts', '**/*.js'],
-   rules: {
-     'consistent-return': 'off'
-   }
-  }
-)
+    files: ['**/*.ts', '**/*.js'],
+    rules: {
+      'consistent-return': 'off',
+      camelcase: 'off',
+    },
+  },
+);
