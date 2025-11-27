@@ -1,26 +1,30 @@
-<article class="flex gap-3.5">
-  <div class="relative w-80 aspect-2/3 flex-shrink-0">
-    <img [ngSrc]="posterPath()" alt="Poster for {{ title() }}" fill />
-  </div>
-  <div>
-    <h1 class="text-4xl font-bold">{{ title() }}</h1>
-    <div class="mt-2">
-      <ul class="flex gap-2">
-        @for (genre of genres(); track $index) {
-          <li class="bg-gray-700 px-2 py-1 rounded-xl text-white">{{ genre.name }}</li>
-        }
-      </ul>
-      <div>
-        <h2 class="text-2xl">About movie</h2>
-        <dl>
-          <dt>Release</dt>
-          <dd class="text-xl">{{ releaseDate() }}</dd>
-          <dt>Rated</dt>
-          <dd class="text-xl">{{ voteAverage() }}</dd>
-          <dt>Overview</dt>
-          <dd>{{ overview() }}</dd>
-        </dl>
+<article class="flex flex-col sm:flex-row gap-3.5">
+  @if (movie()) {
+    <div class="relative w-80 aspect-2/3 flex-shrink-0">
+      <img [ngSrc]="posterPath()" alt="Poster for {{ title() }}" fill />
+    </div>
+    <div>
+      <h1 class="text-4xl font-bold dark:text-slate-200">{{ title() }}</h1>
+      <div class="mt-2">
+        <ul class="flex gap-2">
+          @for (genre of genres(); track $index) {
+            <li class="bg-gray-700 px-2 py-1 rounded-xl text-white">{{ genre.name }}</li>
+          }
+        </ul>
+        <div class="dark:text-slate-200">
+          <h2 class="text-2xl">About movie</h2>
+          <dl>
+            <dt>Release</dt>
+            <dd class="text-xl">{{ releaseDate() }}</dd>
+            <dt>Rated</dt>
+            <dd class="text-xl">{{ voteAverage() }}</dd>
+            <dt>Overview</dt>
+            <dd>{{ overview() }}</dd>
+          </dl>
+        </div>
       </div>
     </div>
-  </div>
+  } @else {
+    <app-movie-details-skeleton />
+  }
 </article>

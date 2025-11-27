@@ -10,12 +10,10 @@ export class Skeleton {
   public readonly variant = input<'text' | 'rectangular' | 'circle'>('rectangular');
   public readonly width = input<string>('100%');
   public readonly height = input<string>('1rem');
-  public readonly borderRadius = input<string>();
 
   public readonly styles = computed(() => ({
     width: this.width(),
     height: this.height(),
-    ...(this.borderRadius() && { borderRadius: this.borderRadius() }),
   }));
 
   public readonly classes = computed(() => ({
