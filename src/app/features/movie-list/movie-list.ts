@@ -1,8 +1,7 @@
 import { Component, DestroyRef, inject } from '@angular/core';
 import { MovieCard } from './movie-card/movie-card';
-import { Route } from '../../core/route/route';
+import { RouteService } from '../../core/services/route-service';
 import { MoviesStore } from '../../core/stores/movies-store';
-import { MovieStore } from '../../core/stores/movie-store';
 import { debounceTime, distinctUntilChanged, filter, map, Subject } from 'rxjs';
 import { MovieCardSkeleton } from './movie-card/movie-card-skeleton/movie-card-skeleton';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -16,8 +15,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 })
 export class MovieList {
   public readonly moviesStore = inject(MoviesStore);
-  public readonly movieStore = inject(MovieStore);
-  public readonly route = inject(Route);
+  public readonly route = inject(RouteService);
   private readonly destroyRef = inject(DestroyRef);
 
   private readonly scrollSubject = new Subject<void>();
@@ -48,7 +46,6 @@ export class MovieList {
   }
 
   protected navigateToMovie(movieId: string): void {
-    this.movieStore.movieId.set(movieId);
     this.route.navigateToMovie(movieId);
   }
 }

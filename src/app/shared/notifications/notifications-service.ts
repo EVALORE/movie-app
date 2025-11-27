@@ -12,7 +12,7 @@ interface Notification {
 @Injectable({
   providedIn: 'root',
 })
-export class NotificationStore {
+export class NotificationsService {
   public readonly notifications = signal<Notification[]>([]);
 
   public show(message: string, type: NotificationType = 'info', duration = 3000): void {
