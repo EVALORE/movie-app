@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Theme } from './theme';
 
 @Component({
@@ -7,6 +7,7 @@ import { Theme } from './theme';
   templateUrl: './theme-toggle.html',
   styleUrl: './theme-toggle.css',
   providers: [Theme],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ThemeToggle {
   protected readonly theme = inject(Theme);

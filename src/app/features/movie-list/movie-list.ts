@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
 import { MovieCard } from './movie-card/movie-card';
 import { MoviesStore } from './movies-store';
 import { debounceTime, distinctUntilChanged, filter, map, Subject } from 'rxjs';
@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
   templateUrl: './movie-list.html',
   styleUrl: './movie-list.css',
   providers: [MoviesStore],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { '(window:scroll)': 'onScroll()' },
 })
 export class MovieList {

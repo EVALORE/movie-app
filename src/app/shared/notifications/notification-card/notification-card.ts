@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   DestroyRef,
   ElementRef,
@@ -51,6 +52,7 @@ export interface Notification {
     '(click)': 'notification().remove()',
     '(keyup)': 'notification().remove()',
   },
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NotificationCard implements OnInit {
   public readonly notification = input.required<Notification>();
