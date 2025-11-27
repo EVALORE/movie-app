@@ -1,3 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import "tailwindcss";
+
+body {
+  @apply dark:bg-gray-900 bg-slate-200;
+}
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
