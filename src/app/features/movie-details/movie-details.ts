@@ -17,7 +17,7 @@ export class MovieDetails implements OnInit {
   protected readonly movie = this.movieStore.movie;
 
   protected readonly posterPath = computed(
-    () => `https://image.tmdb.org/t/p/w500${this.movie()?.poster_path ?? ''}`,
+    () => `https://image.tmdb.org/t/p/w500${this.movie().poster_path}`,
   );
 
   public ngOnInit(): void {

@@ -16,10 +16,13 @@ describe('MovieCard', () => {
     component = fixture.componentInstance;
 
     const mockMovie: Movie = {
-      // eslint-disable-next-line camelcase
       poster_path: '/test-poster.jpg',
       title: 'Test Movie',
       overview: 'This is a test movie overview',
+      release_date: '2024-03-04',
+      id: '1243',
+      genres: [{ id: 354, name: 'thriller' }],
+      vote_average: 8.5,
     };
     fixture.componentRef.setInput('movieInformation', mockMovie);
 

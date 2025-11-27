@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { RouteService } from './route-service';
+import { SearchParams } from './search-params.service';
 
-describe('Route', () => {
-  let service: RouteService;
+describe('Search', () => {
+  let service: SearchParams;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(RouteService);
+    service = TestBed.inject(SearchParams);
   });
 
   it('should be created', () => {

@@ -33,13 +33,13 @@ export interface Notification {
   imports: [],
   template: `<span>{{ notification().message }}</span>`,
   styles: `
-    .error {
+    :host(.error) {
       background-color: var(--color-red-300);
     }
-    .info {
+    :host(.info) {
       background-color: var(--color-blue-300);
     }
-    .success {
+    :host(.success) {
       background-color: var(--color-green-300);
     }
   `,
