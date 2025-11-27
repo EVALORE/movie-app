@@ -3,10 +3,11 @@ import { NgOptimizedImage } from '@angular/common';
 import { MovieStore } from '../../core/stores/movie-store';
 import { ActivatedRoute } from '@angular/router';
 import { Route } from '../../core/route/route';
+import { MovieDetailsSkeleton } from './movie-details-skeleton/movie-details-skeleton';
 
 @Component({
   selector: 'app-movie-details',
-  imports: [NgOptimizedImage],
+  imports: [NgOptimizedImage, MovieDetailsSkeleton],
   templateUrl: './movie-details.html',
   styleUrl: './movie-details.css',
 })

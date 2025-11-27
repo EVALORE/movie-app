@@ -5,7 +5,10 @@ import { Movie } from '../../../core/api/responses';
   selector: 'app-movie-card',
   imports: [],
   templateUrl: './movie-card.html',
-  styleUrl: './movie-card.css',
+  host: {
+    class:
+      'flex border border-slate-700 dark:border-slate-300 shadow-md rounded-lg w-max overflow-hidden',
+  },
 })
 export class MovieCard {
   public readonly movieInformation = input.required<Movie>();

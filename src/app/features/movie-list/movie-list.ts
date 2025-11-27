@@ -1,12 +1,15 @@
-import { Component, inject } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
 import { MovieCard } from './movie-card/movie-card';
 import { Route } from '../../core/route/route';
 import { MoviesStore } from '../../core/stores/movies-store';
 import { MovieStore } from '../../core/stores/movie-store';
+import { debounceTime, distinctUntilChanged, filter, map, Subject } from 'rxjs';
+import { MovieCardSkeleton } from './movie-card/movie-card-skeleton/movie-card-skeleton';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-movie-list',
-  imports: [MovieCard],
+  imports: [MovieCard, MovieCardSkeleton],
   templateUrl: './movie-list.html',
   styleUrl: './movie-list.css',
   host: { '(window:scroll)': 'onScroll()' },
@@ -15,15 +18,33 @@ export class MovieList {
   public readonly moviesStore = inject(MoviesStore);
   public readonly movieStore = inject(MovieStore);
   public readonly route = inject(Route);
+  private readonly destroyRef = inject(DestroyRef);
+
+  private readonly scrollSubject = new Subject<void>();
+
+  constructor() {
+    this.scrollSubject
+      .pipe(
+        map(() => this.isNearBottom()),
+        distinctUntilChanged(),
+        debounceTime(1000),
+        filter((isNearBottom) => isNearBottom && !this.moviesStore.isLoading()),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe(() => {
+        this.moviesStore.loadMoreMovies();
+      });
+  }
 
   public onScroll(): void {
+    this.scrollSubject.next();
+  }
+
+  private isNearBottom(): boolean {
     const scrollPosition = window.innerHeight + window.scrollY;
     const documentHeight = document.documentElement.scrollHeight;
     const threshold = 200;
-
-    if (scrollPosition >= documentHeight - threshold && !this.moviesStore.isLoading()) {
-      this.moviesStore.loadMoreMovies();
-    }
+    return scrollPosition >= documentHeight - threshold;
   }
 
   protected navigateToMovie(movieId: string): void {
