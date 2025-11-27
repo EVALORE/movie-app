@@ -1,5 +1,5 @@
 import { computed, Injectable, signal } from '@angular/core';
-import { Notification } from './notification-card/notification-card';
+import { Notification } from './notification-card';
 
 @Injectable({
   providedIn: 'root',

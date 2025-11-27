@@ -7,7 +7,7 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class:
-      'block animate-pulse bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 bg-[length:200%_100%]',
+      'block rounded animate-pulse bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 bg-[length:200%_100%]',
     '[style]': `
       {
         width: this.width(),
@@ -18,14 +18,12 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
       {
         'h-4': this.variant() === 'text',
         'mb-2': this.variant() === 'text',
-        rounded: this.variant() === 'rectangular',
-        'rounded-full': this.variant() === 'circle',
       }
     `,
   },
 })
 export class Skeleton {
-  public readonly variant = input<'text' | 'rectangular' | 'circle'>('rectangular');
+  public readonly variant = input<'text' | 'rectangular'>('rectangular');
   public readonly width = input<string>('100%');
   public readonly height = input<string>('1rem');
 }

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { NotificationsService } from './notifications-service';
-import { NotificationCard } from './notification-card/notification-card';
+import { NotificationCard } from './notification-card';
 
 @Component({
   selector: 'app-notifications',

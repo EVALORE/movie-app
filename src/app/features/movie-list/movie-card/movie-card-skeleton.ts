@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Skeleton } from '../../../shared/components/skeleton/skeleton';
+import { Skeleton } from '../../../shared/components/skeleton';
 
 @Component({
   selector: 'app-movie-card-skeleton',
@@ -11,7 +11,10 @@ import { Skeleton } from '../../../shared/components/skeleton/skeleton';
       <app-skeleton variant="rectangular" width="23rem" height="5rem" />
     </div>
   `,
-  host: { class: 'flex w-25' },
+  host: {
+    class:
+      'flex border border-slate-700 dark:border-slate-300 shadow-md rounded-lg w-max overflow-hidden',
+  },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MovieCardSkeleton {}
