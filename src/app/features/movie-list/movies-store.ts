@@ -38,8 +38,8 @@ export class MoviesStore {
             this.movies.update((current) => [...current, ...response.results]);
           }
         }),
-        catchError((error: unknown) => {
-          this.notifications.show({ type: 'error', message: String(error) });
+        catchError((error: Error) => {
+          this.notifications.show({ type: 'error', message: error.message });
           return throwError(() => error);
         }),
       );
