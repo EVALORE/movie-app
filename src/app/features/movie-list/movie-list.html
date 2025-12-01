@@ -1,16 +1,12 @@
 <div class="flex gap-2 flex-wrap justify-center">
   @if (moviesStore.isLoading() || moviesStore.movies().length === 0) {
-    <app-movie-card-skeleton />
-    <app-movie-card-skeleton />
-    <app-movie-card-skeleton />
-    <app-movie-card-skeleton />
-    <app-movie-card-skeleton />
-    <app-movie-card-skeleton />
+    <app-movie-card-skeleton *appRepeat="6" />
   }
   @for (movie of moviesStore.movies(); track movie) {
     <app-movie-card [movieInformation]="movie" (click)="navigateToMovie(movie.id)" />
   }
 </div>
+<div appInfiniteScroll (scrolledToBottom)="onScroll()"></div>
 @if (moviesStore.isLoading()) {
   <div class="text-center dark:text-slate-200 text-slate-800">Loading...</div>
 }

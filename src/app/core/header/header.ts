@@ -16,10 +16,11 @@ import { SearchParams } from '../services/search-params.service';
 export class Header {
   public readonly searchParams = inject(SearchParams);
   public readonly input = new FormControl('', { nonNullable: true });
+  private readonly destroyRef = inject(DestroyRef);
 
   constructor() {
     this.input.valueChanges
-      .pipe(debounceTime(500), takeUntilDestroyed(inject(DestroyRef)))
+      .pipe(debounceTime(500), takeUntilDestroyed(this.destroyRef))
       .subscribe((value) => {
         this.searchParams.search.set(value);
       });
