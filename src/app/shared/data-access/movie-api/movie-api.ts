@@ -12,30 +12,17 @@ export class MovieApi {
 
   public getPopularMovies(page: number): Observable<MoviesResponse> {
     return this.http.get<MoviesResponse>(`${environment.baseUrl}/movie/popular`, {
-      headers: {
-        accept: 'application/json',
-        Authorization: `Bearer ${environment.apiKey}`,
-      },
       params: { page: String(page) },
     });
   }
 
   public getSearchMovies(query: string, page: number): Observable<MoviesResponse> {
     return this.http.get<MoviesResponse>(`${environment.baseUrl}/search/movie`, {
-      headers: {
-        accept: 'application/json',
-        Authorization: `Bearer ${environment.apiKey}`,
-      },
       params: { query, page: String(page) },
     });
   }
 
   public getMovie(movieId: string): Observable<Movie> {
-    return this.http.get<Movie>(`${environment.baseUrl}/movie/${movieId}`, {
-      headers: {
-        accept: 'application/json',
-        Authorization: `Bearer ${environment.apiKey}`,
-      },
-    });
+    return this.http.get<Movie>(`${environment.baseUrl}/movie/${movieId}`);
   }
 }

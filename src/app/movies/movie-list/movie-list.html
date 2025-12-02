@@ -2,7 +2,7 @@
   @if (moviesStore.isLoading() || moviesStore.movies().length === 0) {
     <app-movie-card-skeleton *appRepeat="6" />
   }
-  @for (movie of moviesStore.movies(); track movie) {
+  @for (movie of moviesStore.movies(); track movie.id) {
     <app-movie-card [movieInformation]="movie" (click)="navigateToMovie(movie.id)" />
   }
 </div>
