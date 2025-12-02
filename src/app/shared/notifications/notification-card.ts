@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   DestroyRef,
-  ElementRef,
   inject,
   InjectionToken,
   input,
@@ -10,6 +9,7 @@ import {
 } from '@angular/core';
 import { fromEvent, repeat, takeUntil, timer } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { injectNativeElement } from '../../core/injectors/native-element';
 
 export const DEFAULT_NOTIFICATION_DURATION = new InjectionToken<number>(
   'DEFAULT_NOTIFICATION_DURATION',
@@ -57,7 +57,7 @@ export interface Notification {
 export class NotificationCard implements OnInit {
   public readonly notification = input.required<Notification>();
 
-  private readonly element = inject(ElementRef).nativeElement as HTMLElement;
+  private readonly element = injectNativeElement<HTMLElement>();
   private readonly defaultDuration = inject(DEFAULT_NOTIFICATION_DURATION);
   private readonly destroy = inject(DestroyRef);
 

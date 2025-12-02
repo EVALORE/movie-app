@@ -3,7 +3,7 @@ import { provideRouter, withComponentInputBinding } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { movieApiInterceptor } from './core/movie-api-interceptor';
+import { movieApiInterceptor } from './core/interceptors/movie-api-interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
