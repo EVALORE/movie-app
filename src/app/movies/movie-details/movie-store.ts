@@ -1,9 +1,9 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { MovieApi } from '../../core/api/movie-api';
+import { MovieApi } from '../../shared/data-access/movie-api/movie-api';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { NotificationsService } from '../../shared/notifications/notifications-service';
 import { catchError, tap, throwError } from 'rxjs';
-import { Movie } from '../../core/api/responses';
+import { Movie } from '../../shared/data-access/movie-api/movie';
 
 @Injectable()
 export class MovieStore {

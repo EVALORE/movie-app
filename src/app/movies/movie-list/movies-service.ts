@@ -1,26 +1,27 @@
 import { computed, inject, Injectable, linkedSignal, signal } from '@angular/core';
-import { MovieApi } from '../../core/api/movie-api';
-import { Movie, MoviesResponse } from '../../core/api/responses';
+import { MovieApi } from '../../shared/data-access/movie-api/movie-api';
+import { Movie, MoviesResponse } from '../../shared/data-access/movie-api/movie';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { catchError, tap, throwError } from 'rxjs';
 import { NotificationsService } from '../../shared/notifications/notifications-service';
-import { SearchParams } from '../../core/services/search-params.service';
+import { MOVIES_SEARCH } from '../../shared/tokens/movies-search-token';
 
 @Injectable()
-export class MoviesStore {
+export class MoviesService {
   private readonly api = inject(MovieApi);
   private readonly notifications = inject(NotificationsService);
-  private readonly searchParams = inject(SearchParams);
+
+  private readonly search = inject(MOVIES_SEARCH);
 
   public readonly currentPage = linkedSignal(() => {
-    this.searchParams.search();
+    this.search();
     return 1;
   });
   public readonly totalPages = computed(() => this.moviesResource.value().total_pages);
 
   public readonly movies = signal<Movie[]>([]);
   private readonly moviesResource = rxResource({
-    params: () => ({ search: this.searchParams.search(), page: this.currentPage() }),
+    params: () => ({ search: this.search(), page: this.currentPage() }),
     stream: ({ params: { search, page } }) => {
       const request = search
         ? this.api.getSearchMovies(search, page)

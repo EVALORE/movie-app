@@ -6,13 +6,13 @@ export const routes: Routes = [
     path: 'movies',
     title: 'Movies',
     loadComponent: () =>
-      import('./features/movie-list/movie-list').then((component) => component.MovieList),
+      import('./movies/movie-list/movie-list').then((component) => component.MovieList),
   },
   {
     path: 'movie/:id',
     title: 'Movie Details',
     loadComponent: () =>
-      import('./features/movie-details/movie-details').then((component) => component.MovieDetails),
+      import('./movies/movie-details/movie-details').then((component) => component.MovieDetails),
   },
   {
     path: '**',

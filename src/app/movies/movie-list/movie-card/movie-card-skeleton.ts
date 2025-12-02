@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Skeleton } from '../../../shared/components/skeleton';
+import { Skeleton } from '../../../shared/ui/skeleton';
 
 @Component({
   selector: 'app-movie-card-skeleton',

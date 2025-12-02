@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
-import { Movie } from '../../../core/api/responses';
+import { Movie } from '../../../shared/data-access/movie-api/movie';
 
 @Component({
   selector: 'app-movie-card',
