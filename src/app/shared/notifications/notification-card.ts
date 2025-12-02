@@ -1,7 +1,6 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  DestroyRef,
   inject,
   InjectionToken,
   input,
@@ -59,14 +58,13 @@ export class NotificationCard implements OnInit {
 
   private readonly element = injectNativeElement<HTMLElement>();
   private readonly defaultDuration = inject(DEFAULT_NOTIFICATION_DURATION);
-  private readonly destroy = inject(DestroyRef);
 
   public ngOnInit(): void {
     timer(this.notification().duration ?? this.defaultDuration)
       .pipe(
         takeUntil(fromEvent(this.element, 'mouseenter')),
         repeat({ delay: () => fromEvent(this.element, 'mouseleave') }),
-        takeUntilDestroyed(this.destroy),
+        takeUntilDestroyed(),
       )
       .subscribe(() => {
         this.notification().remove();
