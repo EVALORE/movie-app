@@ -6,7 +6,7 @@
     <app-movie-card [movieInformation]="movie" (click)="navigateToMovie(movie.id)" />
   }
 </div>
-<div appInfiniteScroll (scrolledToBottom)="onScroll()"></div>
+<div appScrollSentinel (visible)="onScroll()"></div>
 @if (moviesStore.isLoading()) {
   <div class="text-center dark:text-slate-200 text-slate-800">Loading...</div>
 }

@@ -1,10 +1,10 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ThemeToggle } from './theme-toggle/theme-toggle';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { SearchParams } from '../services/search-params.service';
 import { debounceTime } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { SearchParams } from '../services/search-params.service';
 
 @Component({
   selector: 'app-header',
@@ -14,15 +14,14 @@ import { SearchParams } from '../services/search-params.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Header {
-  public readonly searchParams = inject(SearchParams);
-  public readonly input = new FormControl('', { nonNullable: true });
-  private readonly destroyRef = inject(DestroyRef);
+  private readonly searchParams = inject(SearchParams);
+  protected readonly search = new FormControl(this.searchParams.search(), {
+    nonNullable: true,
+  });
 
   constructor() {
-    this.input.valueChanges
-      .pipe(debounceTime(500), takeUntilDestroyed(this.destroyRef))
-      .subscribe((value) => {
-        this.searchParams.search.set(value);
-      });
+    this.search.valueChanges.pipe(debounceTime(500), takeUntilDestroyed()).subscribe((value) => {
+      this.searchParams.search.set(value);
+    });
   }
 }
